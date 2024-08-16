@@ -21,11 +21,11 @@ public class Lokasi {
         this.id = id;
     }
 
-    public String getNamaProyek() {
+    public String getNamaLokasi() {
         return namaLokasi;
     }
 
-    public void setNamaProyek(String namaProyek) {
-        this.namaLokasi = namaProyek;
+    public void setNamaLokasi(String namaLokasi) {
+        this.namaLokasi = namaLokasi;
     }
 }
