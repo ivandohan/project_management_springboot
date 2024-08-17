@@ -3,7 +3,6 @@ package com.projectmanagement.sei_msib.Controllers;
 import com.projectmanagement.sei_msib.Entities.Lokasi;
 import com.projectmanagement.sei_msib.Services.LokasiService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,14 +15,14 @@ public class LokasiController {
     @Autowired
     private LokasiService lokasiService;
 
-    @PostMapping
-    public Lokasi createLokasi(@RequestBody Lokasi lokasi) {
-        return lokasiService.saveLokasi(lokasi);
-    }
-
     @GetMapping
     public List<Lokasi> getAllLokasi() {
         return lokasiService.getAllLokasi();
+    }
+
+    @PostMapping
+    public Lokasi createLokasi(@RequestBody Lokasi lokasi) {
+        return lokasiService.saveLokasi(lokasi);
     }
 
     @PutMapping("/{id}")
@@ -31,19 +30,18 @@ public class LokasiController {
         Optional<Lokasi> lokasiTerbaru = lokasiService.updateLokasiById(id, lokasiRequest);
 
         if(lokasiTerbaru.isPresent()) {
-            return ResponseEntity.ok(lokasiTerbaru.get());
+            return ResponseEntity.ok().body(lokasiTerbaru.get());
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            return ResponseEntity.notFound().build();
         }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Lokasi> deleteLokasi(@PathVariable Long id) {
-        boolean isDeleted = lokasiService.deleteLokasiById(id);
-        if(isDeleted) {
-            return ResponseEntity.status(HttpStatus.OK).body(null);
+    public ResponseEntity<?> deleteLokasi(@PathVariable Long id) {
+        if(lokasiService.deleteLokasiById(id)) {
+            return ResponseEntity.ok().build();
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            return ResponseEntity.notFound().build();
         }
     }
 }

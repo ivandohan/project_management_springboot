@@ -1,13 +1,12 @@
 package com.projectmanagement.sei_msib.Entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Entity
 public class Lokasi {
@@ -22,6 +21,10 @@ public class Lokasi {
 
     @UpdateTimestamp
     private Timestamp updatedAt;
+
+    @OneToMany(mappedBy = "lokasi", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<ProyekLokasi> proyekLokasiList;
 
     public Long getId() {
         return id;
@@ -69,5 +72,13 @@ public class Lokasi {
 
     public Timestamp getUpdatedAt() {
         return updatedAt;
+    }
+
+    public List<ProyekLokasi> getProyekLokasiList() {
+        return proyekLokasiList;
+    }
+
+    public void setProyekLokasiList(List<ProyekLokasi> proyekLokasiList) {
+        this.proyekLokasiList = proyekLokasiList;
     }
 }
