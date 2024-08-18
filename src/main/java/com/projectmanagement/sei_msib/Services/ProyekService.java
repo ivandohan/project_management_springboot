@@ -42,23 +42,23 @@ public class ProyekService {
         return proyekLokasiRepository.findByProyekId(id);
     }
 
-    public Proyek createProyekWithAvailableLokasi(ProyekRequestDTO proyekRequestDTO) {
-        Proyek proyek = proyekRepository.save(proyekRequestDTO.getProyek());
-
-        for(long idLokasi : proyekRequestDTO.getIdLokasiList()) {
-            Optional<Lokasi> lokasi = lokasiRepository.findById(idLokasi);
-            if (lokasi.isPresent()) {
-                Lokasi newLokasi = lokasiRepository.save(lokasi.get());
-
-                ProyekLokasi proyekLokasi = new ProyekLokasi();
-                proyekLokasi.setProyek(proyek);
-                proyekLokasi.setLokasi(newLokasi);
-                proyekLokasiRepository.save(proyekLokasi);
-            }
-        }
-
-        return proyek;
-    }
+//    public Proyek createProyekWithAvailableLokasi(ProyekRequestDTO proyekRequestDTO) {
+//        Proyek proyek = proyekRepository.save(proyekRequestDTO.getProyek());
+//
+//        for(long idLokasi : proyekRequestDTO.getIdLokasiList()) {
+//            Optional<Lokasi> lokasi = lokasiRepository.findById(idLokasi);
+//            if (lokasi.isPresent()) {
+//                Lokasi newLokasi = lokasiRepository.save(lokasi.get());
+//
+//                ProyekLokasi proyekLokasi = new ProyekLokasi();
+//                proyekLokasi.setProyek(proyek);
+//                proyekLokasi.setLokasi(newLokasi);
+//                proyekLokasiRepository.save(proyekLokasi);
+//            }
+//        }
+//
+//        return proyek;
+//    }
 
     public Optional<Proyek> updateProyek(Long id, Proyek proyekRequest)  {
         Optional<Proyek> proyekOptional = proyekRepository.findById(id);
@@ -76,6 +76,8 @@ public class ProyekService {
             return Optional.empty();
         }
     }
+
+
 
     @Transactional
     public boolean deleteProyek(Long id) {

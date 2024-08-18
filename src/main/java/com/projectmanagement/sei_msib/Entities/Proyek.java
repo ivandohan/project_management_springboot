@@ -31,6 +31,7 @@ public class Proyek {
     @JsonIgnore
     private List<ProyekLokasi> proyekLokasiList;
 
+
     public Long getId() {
         return id;
     }
